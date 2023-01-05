@@ -1,0 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.carContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.carContainer div {
+  margin-top: 50px;
+}
