@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
@@ -71,13 +71,28 @@ function App() {
         ...actualWrongLetters,
         normalizedLetter
       ])
+      setGuesses((actualGuesses) => actualGuesses - 1)
     }
-    console.log(guessedLetters)
-    console.log(wrongLetters)
   }
+
+  const clearLetterStates = () => {
+    setGuessedLetters([])
+    setWrongLetters([])
+  }
+
+  useEffect(() => {
+    if (guesses <= 0) {
+      // reset all states
+      clearLetterStates()
+
+      setGameStage(stages[2].name)
+    }
+  }, [guesses])
 
   const retry = () => {
     setGameStage(stages[0].name)
+    setScore(0)
+    setGuesses(3)
 
   }
 
