@@ -55,8 +55,8 @@ function App() {
     setGameStage(stages[1].name)
   }
 
-  const verifyLetter = () => {
-    setGameStage(stages[2].name)
+  const verifyLetter = (letter) => {
+    console.log(letter)
 
   }
 
@@ -69,8 +69,9 @@ function App() {
     <div className="App">
       {gameStage === "start" && <StartScreen startGame={startGame} />}
       {gameStage === "game" && <Game verifyLetter={verifyLetter} pickedWord={pickedWord}
-        pickedCategory={pickedCategory} letters={letters} guessedLetters={guessedLetters} wrongLetters={wrongLetters}
-        guesses={guesses} score={score}/>}
+        pickedCategory={pickedCategory} letters={letters}
+        guessedLetters={guessedLetters} wrongLetters={wrongLetters}
+        guesses={guesses} score={score} />}
       {gameStage === "end" && <GameOver retry={retry} />}
     </div>
   );
