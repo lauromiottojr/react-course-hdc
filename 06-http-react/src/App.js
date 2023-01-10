@@ -35,6 +35,15 @@ function App() {
       },
       body: JSON.stringify(products),
     });
+    // dynamic loadin
+    const addedProduct = await res.json()
+
+    setProducts((prevProducts) => [
+      ...prevProducts,
+      addedProduct
+    ])
+    setName("")
+    setPrice("")
   }
 
   return (
@@ -42,7 +51,7 @@ function App() {
       <h1>Lista de produtos</h1>
       <ul>
         {products.map((product) => (
-          <li key={product.id}>{product.name} - {product.price}</li>
+          <li key={product.id}>{product.name} - R${product.price}</li>
         ))}
       </ul>
       <div className='addProduct'>
