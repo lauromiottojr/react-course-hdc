@@ -14,36 +14,6 @@
       "id": 3,
       "name": "Boné aba reta",
       "price": 29.9
-    },
-    {
-      "name": "Teste",
-      "price": "2",
-      "id": 4
-    },
-    {
-      "name": "Capa de chuva",
-      "price": "50.50",
-      "id": 5
-    },
-    {
-      "name": "Camisa social",
-      "price": "150",
-      "id": 6
-    },
-    {
-      "name": "Carro",
-      "price": "150000",
-      "id": 7
-    },
-    {
-      "name": "testando hook",
-      "price": "1",
-      "id": 8
-    },
-    {
-      "name": "testando hook",
-      "price": "1",
-      "id": 9
     }
   ]
 }
