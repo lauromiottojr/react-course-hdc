@@ -8,7 +8,7 @@ const url = 'http://localhost:3000/products';
 function App() {
 
   // custom hook
-  const { data: items } = useFetch(url)
+  const { data: items, httpConfig } = useFetch(url)
 
   const [products, setProducts] = useState([])
   const [name, setName] = useState("")
@@ -29,11 +29,11 @@ function App() {
   // adding products
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const products = {
+    const product = {
       name,
       price
     }
-    const res = await fetch(url, {
+    /*const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -46,7 +46,8 @@ function App() {
     setProducts((prevProducts) => [
       ...prevProducts,
       addedProduct
-    ])
+    ])*/
+    httpConfig(product, "POST")
     setName("")
     setPrice("")
   }
