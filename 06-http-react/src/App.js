@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useFetch } from './hooks/useFetch'
 
 import './App.css';
 
@@ -6,20 +7,24 @@ const url = 'http://localhost:3000/products';
 
 function App() {
 
+  // custom hook
+  const { data: items } = useFetch(url)
+
   const [products, setProducts] = useState([])
   const [name, setName] = useState("")
   const [price, setPrice] = useState("")
 
+
   // getting datas from api
 
-  useEffect(() => {
+  /*useEffect(() => {
     async function fetchData() {
       const res = await fetch(url);
       const data = await res.json(); // transform res to JSON 
       setProducts(data);
     }
     fetchData();
-  }, []);
+  }, []);*/
 
   // adding products
   const handleSubmit = async (e) => {
@@ -35,7 +40,7 @@ function App() {
       },
       body: JSON.stringify(products),
     });
-    // dynamic loadin
+    // dynamic loading
     const addedProduct = await res.json()
 
     setProducts((prevProducts) => [
@@ -50,7 +55,7 @@ function App() {
     <div className="App">
       <h1>Lista de produtos</h1>
       <ul>
-        {products.map((product) => (
+        {items && items.map((product) => (
           <li key={product.id}>{product.name} - R${product.price}</li>
         ))}
       </ul>
