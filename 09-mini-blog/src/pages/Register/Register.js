@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react'
+import { useAuthentication } from '../../hooks/useAuthentication'
 
 import styles from './Register.module.css'
 
 const Register = () => {
 
-    const [displayname, setDisplayname] = useState("")
+    const [displayName, setDisplayName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
 
-    const handleSubmit = (e) => {
+    const { createUser, error: authError, loading } = useAuthentication()
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
         const user = {
-            displayname,
+            displayName,
             email,
             password
         }
@@ -23,10 +26,14 @@ const Register = () => {
             setError("As senhas precisão ser iguais!")
             return;
         }
-        console.log(user)
+        const res = await createUser(user)
     }
 
-
+    useEffect(() => {
+        if (authError) {
+            setError(authError)
+        }
+    }, [authError])
 
     return (
         <div className={styles.register}>
@@ -35,8 +42,8 @@ const Register = () => {
             <form onSubmit={handleSubmit}>
                 <label>
                     <span>Nome:</span>
-                    <input type="text" name='displayname' required placeholder='Nome do usuário'
-                        value={displayname} onChange={(e) => setDisplayname(e.target.value)} />
+                    <input type="text" name='displayName' required placeholder='Nome do usuário'
+                        value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
                 </label>
                 <label>
                     <span>Email:</span>
@@ -53,7 +60,8 @@ const Register = () => {
                     <input type="password" name='confirmPassword' required placeholder='Confirme sua senha'
                         value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </label>
-                <button className="btn">Cadastrar</button>
+                {!loading && <button className="btn">Cadastrar</button>}
+                {loading && <button className="btn" disabled>Aguarde...</button>}
                 {error && <p className='error'>{error}</p>}
             </form>
         </div>
