@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { useAuthentication } from '../../hooks/useAuthentication'
+import { useInsertDocument } from '../../hooks/useInsertDocument'
+import { useAuthValue } from '../../context/AuthContext'
 
 import styles from './CreatePost.module.css'
 
@@ -12,8 +15,21 @@ const CreatePost = () => {
     const [tags, setTags] = useState([])
     const [formError, setFormError] = useState("")
 
+    const { insertDocument, response } = useInsertDocument("posts")
+
+    const { user } = useAuthValue()
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        setFormError("")
+        insertDocument({
+            title,
+            image,
+            body,
+            tags,
+            uid: user.uid,
+            createdBy: user.displayName
+        })
     }
 
     return (
@@ -34,17 +50,16 @@ const CreatePost = () => {
                 <label>
                     <span>Conteúdo:</span>
                     <textarea name='body' required placeholder='Insira o conteúdo do post'
-                        value={image} onChange={(e) => setBody(e.target.value)}></textarea>
+                        value={body} onChange={(e) => setBody(e.target.value)}></textarea>
                 </label>
                 <label>
                     <span>Tags:</span>
                     <input type="text" name='tags' required placeholder='Insira as tags separadas por vírgula'
                         value={tags} onChange={(e) => setTags(e.target.value)} />
                 </label>
-                <button className="btn">Criar post</button>
-                {/*!loading && <button className="btn">Cadastrar</button>}
-                {loading && <button className="btn" disabled>Aguarde...</button>}
-    {error && <p className='error'>{error}</p>*/}
+                {!response.loading && <button className="btn">Criar post!</button>}
+                {response.loading && <button className="btn" disabled>Aguarde...</button>}
+                {response.error && <p className='error'>{response.error}</p>}
             </form>
         </div>
     )
