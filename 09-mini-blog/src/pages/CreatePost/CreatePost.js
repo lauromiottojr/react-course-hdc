@@ -17,19 +17,39 @@ const CreatePost = () => {
 
     const { insertDocument, response } = useInsertDocument("posts")
 
+    const navigate = useNavigate()
+
     const { user } = useAuthValue()
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setFormError("")
+
+        try {
+            new URL(image)
+        } catch (error) {
+            setFormError("A imagem precisa ser uma URL!")
+            return;
+        }
+
+        // split -> divide each word
+        // trim -> remove blank spaces
+        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase())
+
+        if (!title || !image || !body || !tags) {
+            setFormError("Por favor, preencha todos os campos!")
+            return;
+        }
+
         insertDocument({
             title,
             image,
             body,
-            tags,
+            tagsArray,
             uid: user.uid,
             createdBy: user.displayName
         })
+        navigate("/")
     }
 
     return (
@@ -57,9 +77,10 @@ const CreatePost = () => {
                     <input type="text" name='tags' required placeholder='Insira as tags separadas por vírgula'
                         value={tags} onChange={(e) => setTags(e.target.value)} />
                 </label>
-                {!response.loading && <button className="btn">Criar post!</button>}
+                {!response.loading && <button className="btn">Criar post</button>}
                 {response.loading && <button className="btn" disabled>Aguarde...</button>}
                 {response.error && <p className='error'>{response.error}</p>}
+                {formError && <p className='error'>{formError}</p>}
             </form>
         </div>
     )
