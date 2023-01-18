@@ -59,6 +59,10 @@ textarea {
   background-color: transparent;
 }
 
+textarea {
+  font-size: 1.2em;
+}
+
 .btn {
   background-color: #1a8918;
   color: #fff;
@@ -72,12 +76,12 @@ textarea {
   font-size: 1em;
 }
 
-.btn .btnDark {
+.btn.btnDark {
   background-color: #000;
   border-radius: 0;
 }
 
-.btn .btnOutline {
+.btn.btnOutline {
   background-color: transparent;
   border-radius: 0;
   color: #000;
@@ -90,11 +94,11 @@ textarea {
   color: #fff;
 }
 
-.btn .btnOutline:hover {
+.btn.btnOutline:hover {
   background-color: #000;
 }
 
-.btn .btnDanger:hover {
+.btn.btnDanger:hover {
   background-color: #dc3545;
 }
 
