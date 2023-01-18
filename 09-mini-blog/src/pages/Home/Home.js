@@ -1,4 +1,4 @@
-import { useNavigate, Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useFetchDocuments } from '../../hooks/useFetchDocuments'
 
@@ -10,9 +10,13 @@ const Home = () => {
 
     const [query, setQuery] = useState("")
     const { documents: posts, loading } = useFetchDocuments("posts")
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (query) {
+            return navigate(`/search?query=${query}`)
+        }
     }
 
     return (
