@@ -49,6 +49,7 @@ const CreatePost = () => {
             uid: user.uid,
             createdBy: user.displayName
         })
+        // after create post, send the user to home
         navigate("/")
     }
 
