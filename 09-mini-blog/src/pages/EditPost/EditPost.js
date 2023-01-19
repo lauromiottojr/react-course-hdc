@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useAuthentication } from '../../hooks/useAuthentication'
-import { useInsertDocument } from '../../hooks/useInsertDocument'
+import { useUpdateDocument } from '../../hooks/useUpdateDocument'
 import { useAuthValue } from '../../context/AuthContext'
 import { useFetchDocument } from '../../hooks/useFetchDocument'
 
@@ -29,7 +28,7 @@ const EditPost = () => {
         }
     }, [post])
 
-    const { insertDocument, response } = useInsertDocument("posts")
+    const { updateDocument, response } = useUpdateDocument("posts")
 
     const navigate = useNavigate()
 
@@ -55,16 +54,18 @@ const EditPost = () => {
             return;
         }
 
-        insertDocument({
+        const data = {
             title,
             image,
             body,
             tagsArray,
             uid: user.uid,
             createdBy: user.displayName
-        })
+        }
 
-        navigate("/")
+        updateDocument(id, data)
+
+        navigate("/dashboard")
     }
 
     return (
@@ -96,7 +97,7 @@ const EditPost = () => {
                             <input type="text" name='tags' required placeholder='Insira as tags separadas por vírgula'
                                 value={tags} onChange={(e) => setTags(e.target.value)} />
                         </label>
-                        {!response.loading && <button className="btn">Criar post</button>}
+                        {!response.loading && <button className="btn">Editar</button>}
                         {response.loading && <button className="btn" disabled>Aguarde...</button>}
                         {response.error && <p className='error'>{response.error}</p>}
                         {formError && <p className='error'>{formError}</p>}
