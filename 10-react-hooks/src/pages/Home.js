@@ -9,6 +9,7 @@ import HookUseCallback from '../components/HookUseCallback'
 import HookUseMemo from '../components/HookUseMemo'
 import HookUseLayoutEffect from '../components/HookUseLayoutEffect'
 import HookUseImperativeHandle from '../components/HookUseImperativeHandle'
+import HooksCustom from '../components/HooksCustom'
 
 const Home = () => {
 
@@ -16,7 +17,7 @@ const Home = () => {
 
   return (
     <div>
-      <HookUseImperativeHandle/>
+      <HooksCustom />
       <hr />
     </div>
   )
