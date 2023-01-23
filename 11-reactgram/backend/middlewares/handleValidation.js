@@ -9,7 +9,7 @@ const validate = (req, res, next) => {
 
     const extractedErrors = []
 
-    errors.array().map((error) => extractedErrors.push(error.message))
+    errors.array().map((error) => extractedErrors.push(error.msg))
 
     return res.status(422).json({
         errors: extractedErrors
