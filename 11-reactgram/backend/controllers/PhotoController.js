@@ -60,10 +60,21 @@ const getAllPhotos = async (req, res) => {
 }
 
 // get user photos
-const getUserPhotos = async(req, res)=>{
-    const {id} = req.params
-    const photos = await Photo.find({userId: id}).sort([["createdAt", -1]]).exec()
+const getUserPhotos = async (req, res) => {
+    const { id } = req.params
+    const photos = await Photo.find({ userId: id }).sort([["createdAt", -1]]).exec()
     res.status(200).json(photos)
+}
+
+// get photo by id
+const getPhotoById = async (req, res) => {
+    const { id } = req.params
+    const photo = await Photo.findById(mongoose.Types.ObjectId(id))
+    if (!photo) {
+        res.status(404).json({ errors: ["Foto não encontrada."] })
+        return
+    }
+    res.status(200).json(photo)
 }
 
 module.exports = {
@@ -71,4 +82,5 @@ module.exports = {
     deletePhoto,
     getAllPhotos,
     getUserPhotos,
+    getPhotoById,
 }
