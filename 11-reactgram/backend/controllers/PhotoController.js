@@ -34,10 +34,9 @@ const deletePhoto = async (req, res) => {
     const reqUser = req.user
 
     try {
-        const photo = await Photo.findById(mongoose.Types.ObjectId(id))
+        const photo = await checkPhotoExists({ id }, res)
         // check if photo exists
         if (!photo) {
-            res.status(404).json({ errors: ["Foto não encontrada."] })
             return
         }
         // check if photo belongs to user
@@ -70,9 +69,8 @@ const getUserPhotos = async (req, res) => {
 const getPhotoById = async (req, res) => {
     const { id } = req.params
     try {
-        const photo = await Photo.findById(mongoose.Types.ObjectId(id))
+        const photo = await checkPhotoExists({ id }, res)
         if (!photo) {
-            res.status(404).json({ errors: ["Foto não encontrada."] })
             return
         }
         res.status(200).json(photo)
@@ -86,10 +84,9 @@ const updatePhoto = async (req, res) => {
     const { id } = req.params
     const { title } = req.body
     const reqUser = req.user
-    const photo = await Photo.findById(id)
+    const photo = await checkPhotoExists({ id }, res)
     // check if photo exists
     if (!photo) {
-        res.status(404).json({ errors: ["Foto não encontrada."] })
         return
     }
     // check if photo belongs to user
@@ -108,10 +105,9 @@ const updatePhoto = async (req, res) => {
 const likePhoto = async (req, res) => {
     const { id } = req.params
     const reqUser = req.user
-    const photo = await Photo.findById(id)
+    const photo = await checkPhotoExists({ id }, res)
     // check if photo exists
     if (!photo) {
-        res.status(404).json({ errors: ["Foto não encontrada."] })
         return
     }
     // check if the user already liked the photo
@@ -131,10 +127,9 @@ const commentPhoto = async (req, res) => {
     const { comment } = req.body
     const reqUser = req.user
     const user = await User.findById(reqUser._id)
-    const photo = await Photo.findById(id)
+    const photo = await checkPhotoExists({ id }, res)
     // check if photo exists
     if (!photo) {
-        res.status(404).json({ errors: ["Foto não encontrada."] })
         return
     }
     // put comment in the array of comments
@@ -156,6 +151,20 @@ const searchPhotos = async (req, res) => {
     const photos = await Photo.find({ title: new RegExp(query, "i") }).exec()
     res.status(200).json(photos)
 }
+
+// internal functions -->
+const checkPhotoExists = async ({ id }, res) => {
+    const photo = await Photo.findById(mongoose.Types.ObjectId(id))
+    // check if photo exists
+    if (photo) {
+        return photo
+    } else {
+        res.status(404).json({ errors: ["Foto não encontradaa."] })
+        return false
+    }
+
+}
+
 
 module.exports = {
     insertPhoto,
