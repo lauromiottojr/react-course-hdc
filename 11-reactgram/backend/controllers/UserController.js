@@ -17,9 +17,8 @@ const generateToken = (id) => {
 const register = async (req, res) => {
     const { name, email, password } = req.body
 
-    //check if user exists
-    const user = await User.findOne({ email })
-    if (user) {
+    // check if user exists and stop if exists
+    if (await checkUserExists({ email })) {
         res.status(422).json({ errors: ["E-mail já cadastrado!"] })
         return
     }
@@ -50,11 +49,12 @@ const register = async (req, res) => {
 // sign user in
 const login = async (req, res) => {
     const { email, password } = req.body
-    const user = await User.findOne({ email })
+    const user = await checkUserExists({ email })
     if (!user) {
         res.status(404).json({ errors: ["Usuário não encontrado!"] })
         return
     }
+
     // check if password matches
     if (!(await bcrypt.compare(password, user.password))) {
         res.status(422).json({ erros: ["Senha inválida!"] })
@@ -106,7 +106,7 @@ const update = async (req, res) => {
 const getUserById = async (req, res) => {
     const { id } = req.params
     try {
-        const user = await User.findById(mongoose.Types.ObjectId(id)).select("-password")
+        const user = await checkUserExists({ id })
         // check if user exists
         if (!user) {
             res.status(404).json({ errors: ["Usuário não encontrado!"] })
@@ -116,6 +116,25 @@ const getUserById = async (req, res) => {
     } catch (error) {
         res.status(404).json({ errors: ["Usuário não encontrado!"] })
         return
+    }
+}
+
+// internal functions -->
+// check if user exists and return USER if it exists and false if not
+const checkUserExists = async ({ id, email }) => {
+    let user = null
+    // search user with email
+    if (email) {
+        user = await User.findOne({ email })
+    }
+    // search user with id
+    else if (id) {
+        user = await User.findById(mongoose.Types.ObjectId(id)).select("-password")
+    }
+    if (user) {
+        return user
+    } else {
+        return false
     }
 }
 
