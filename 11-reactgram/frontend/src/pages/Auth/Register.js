@@ -10,7 +10,7 @@ const Register = () => {
   }
 
   return (
-    <div>
+    <div id='register'>
       <h2>Reactgram</h2>
       <p className="subtitle">Cadastre-se para ver as fotos de seus amigos</p>
       <form onSubmit={handleSubmit}>
