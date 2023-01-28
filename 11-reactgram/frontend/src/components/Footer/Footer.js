@@ -1,8 +1,8 @@
-import styles from './Footer.module.css'
+import './Footer.css'
 
 const Footer = () => {
     return (
-        <footer>
+        <footer id='footer'>
             <p>Reactgram &copy; 2023</p>
         </footer>
     )
