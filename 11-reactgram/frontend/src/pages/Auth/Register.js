@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { register, reset } from '../../slices/authSlice'
 
 import './Auth.css'
 
@@ -10,18 +13,27 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
+  const dispatch = useDispatch()
+
+  const { loading, error } = useSelector((state) => state.auth)
+
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    const user = {
+      name,
+      email,
+      password,
+      confirmPassword
+    }
+
+    dispatch(register(user))
   }
 
-  const user = {
-    name,
-    email,
-    password,
-    confirmPassword
-  }
-
-  console.log(user);
+  // clean all auth states
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <div id='register'>
