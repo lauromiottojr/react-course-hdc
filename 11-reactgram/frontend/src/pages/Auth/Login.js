@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { login, reset } from '../../slices/authSlice'
+
 import Message from '../../components/Message/Message'
 
 import './Auth.css'
@@ -11,9 +13,22 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const dispatch = useDispatch()
+  const { loading, error } = useSelector((state) => state.auth)
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    const user = {
+      email,
+      password,
+    }
+    dispatch(login(user))
   }
+
+  // clean all states
+  useEffect(() => {
+    dispatch(reset())
+  }, [dispatch])
 
   return (
     <div id='login'>
@@ -24,7 +39,9 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)} value={email || ""} />
         <input type="password" placeholder='Senha'
           onChange={(e) => setPassword(e.target.value)} value={password || ""} />
-        <input type="submit" placeholder='Entrar' />
+        {!loading && <input type="submit" value='Entrar' />}
+        {loading && <input type="submit" value='Carregando...' disabled />}
+        {error && <Message msg={error} type="error" />}
       </form>
       <p>Não tem uma conta? <Link to='/register'>Clique aqui!</Link></p>
     </div>
