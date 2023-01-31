@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useAuth } from '../../hooks/useAuth'
 
+import { reset, logout } from '../../slices/authSlice'
 
 import { BsSearch, BsHouseDoorFill, BsFillPersonFill, BsFillCameraFill } from 'react-icons/bs'
 
@@ -13,6 +14,16 @@ const Navbar = () => {
 
     const { auth } = useAuth()
     const { user } = useSelector((state) => state.auth)
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(logout())
+        dispatch(reset())
+        navigate("/login")
+    }
 
     return (
         <nav id='nav'>
@@ -41,7 +52,7 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li>
-                            <span>Sair</span>
+                            <span onClick={handleLogout}>Sair</span>
                         </li>
                     </>
                 ) : (
