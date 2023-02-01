@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { resetMessage, profile } from '../../slices/userSlice'
+import { resetMessage, profile, updateProfile } from '../../slices/userSlice'
 
 import Message from '../../components/Message/Message'
 
@@ -38,8 +38,29 @@ const EditProfile = () => {
         }
     }, [user])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        // get user datas from states
+        const userData = {
+            name,
+        }
+        if (imageProfile) {
+            userData.imageProfile = imageProfile
+        }
+        if (bio) {
+            userData.bio = bio
+        }
+        if (password) {
+            userData.password = password
+        }
+        // build form data
+        const formData = new FormData()
+        const userFormData = Object.keys(userData).forEach((key) => formData.append(key, userData[key]))
+        formData.append("user", userFormData)
+        await dispatch(updateProfile(formData))
+        setTimeout(() => {
+            dispatch(resetMessage())
+        }, 2000);
     }
 
     const handleFile = (e) => {
@@ -52,7 +73,7 @@ const EditProfile = () => {
     return (
         <div id='editProfile'>
             <p className='subtitle'>Adicione uma imagem de perfil e conte mais sobre você...</p>
-            {(user.profileImage || previewImage) && (
+            {(user.imageProfile || previewImage) && (
                 <img className='profileImage' src={
                     previewImage ? URL.createObjectURL(previewImage)
                         : `${upload}/users/${user.profileImage}`
@@ -77,7 +98,10 @@ const EditProfile = () => {
                     <input type="password" placeholder="Digite sua nova senha"
                         onChange={(e) => setPassword(e.target.value)} value={password || ""} />
                 </label>
-                <input type="submit" value="Atualizar" />
+                {!loading && <input type="submit" value='Atualizar' />}
+                {loading && <input type="submit" value='Carregando...' disabled />}
+                {error && <Message msg={error} type="error" />}
+                {message && <Message msg={message} type="success" />}
             </form>
         </div>
     )
