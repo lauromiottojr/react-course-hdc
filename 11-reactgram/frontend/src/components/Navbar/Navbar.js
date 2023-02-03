@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link to='/'><h2>ReactGram</h2></Link>
             <form id='searchForm'>
                 <BsSearch />
-                <input type="text" placeholder='Pesquisar...' />
+                <input type="text" placeholder='Pesquisar' />
             </form>
             <ul id='navLinks'>
                 {auth ? (
@@ -42,8 +42,9 @@ const Navbar = () => {
                         </li>
                         {user && (
                             <li>
-                                <NavLink to={`/users/${user.id}`} />
-                                <BsFillCameraFill />
+                                <NavLink to={`/users/${user.id}`} >
+                                    <BsFillCameraFill />
+                                </NavLink>
                             </li>
                         )}
                         <li>
