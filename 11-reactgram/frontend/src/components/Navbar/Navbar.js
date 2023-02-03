@@ -14,6 +14,7 @@ const Navbar = () => {
 
     const { auth } = useAuth()
     const { user } = useSelector((state) => state.auth)
+    console.log(user);
 
     const navigate = useNavigate()
 
@@ -42,7 +43,7 @@ const Navbar = () => {
                         </li>
                         {user && (
                             <li>
-                                <NavLink to={`/users/${user.id}`} >
+                                <NavLink to={`/users/${user._id}`} >
                                     <BsFillCameraFill />
                                 </NavLink>
                             </li>

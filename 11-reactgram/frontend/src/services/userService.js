@@ -30,7 +30,6 @@ const updateProfile = async (data, token) => {
 // get user by id
 const getUserDetails = async (id) => {
     const config = requestConfig("GET")
-
     try {
         const res = await fetch(api + "/users/" + id, config)
             .then((res) => res.json())
