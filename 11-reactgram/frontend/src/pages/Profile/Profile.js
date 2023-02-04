@@ -104,8 +104,15 @@ const Profile = () => {
                         <div className='photo' key={photo.id}>
                             {photo.image && (<img src={`${upload}/photos/${photo.image}`}
                                 alt={photo.title} />)}
-                            {id === userAuth._id ? (<p>Actions</p>) :
-                                (<Link className="btn" to={`/photos/${photo._id}`}></Link>)}
+                            {id === userAuth._id ?
+                                (<div className='actions'>
+                                    <Link to={`/photos/${photo._id}`}>
+                                        <BsFillEyeFill />
+                                    </Link>
+                                    <BsPencilFill />
+                                    <BsXLg />
+                                </div>) :
+                                (<Link className="btn" to={`/photos/${photo._id}`}>Ver</Link>)}
                         </div>
                     ))}
                     {photos.length === 0 && <p>Ainda não há fotos publicadas!</p>}
