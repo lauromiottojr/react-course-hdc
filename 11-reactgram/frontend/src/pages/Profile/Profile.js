@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getUserDetails } from '../../slices/userSlice'
-import { publishPhoto, resetMessage } from '../../slices/photoSlice'
+import { publishPhoto, resetMessage, getUserPhotos } from '../../slices/photoSlice'
 
 import { BsFillEyeFill, BsPencilFill, BsXLg } from 'react-icons/bs'
 
@@ -33,6 +33,7 @@ const Profile = () => {
     // load user data
     useEffect(() => {
         dispatch(getUserDetails(id))
+        dispatch(getUserPhotos(id))
     }, [dispatch, id])
 
     if (loading) {
@@ -96,6 +97,20 @@ const Profile = () => {
                     {messagePhoto && <Message msg={messagePhoto} type="success" />}
                 </>
             )}
+            <div className='userPhotos'>
+                <h2>Fotos publicadas</h2>
+                <div className='photosContainer'>
+                    {photos && photos.map((photo) => (
+                        <div className='photo' key={photo.id}>
+                            {photo.image && (<img src={`${upload}/photos/${photo.image}`}
+                                alt={photo.title} />)}
+                            {id === userAuth._id ? (<p>Actions</p>) :
+                                (<Link className="btn" to={`/photos/${photo._id}`}></Link>)}
+                        </div>
+                    ))}
+                    {photos.length === 0 && <p>Ainda não há fotos publicadas!</p>}
+                </div>
+            </div>
         </div>
     )
 }

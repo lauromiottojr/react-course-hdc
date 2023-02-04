@@ -6,7 +6,7 @@ const mongoose = require("mongoose")
 // insert photo with user related to it
 const insertPhoto = async (req, res) => {
     const { title } = req.body
-    const image = req.file.fileName
+    const image = req.file.filename
 
     const reqUser = req.user
     const user = await User.findById(reqUser._id)
