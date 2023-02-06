@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getUserDetails } from '../../slices/userSlice'
-import { publishPhoto, resetMessage, getUserPhotos } from '../../slices/photoSlice'
+import { publishPhoto, resetMessage, getUserPhotos, deletePhoto } from '../../slices/photoSlice'
 
 import { BsFillEyeFill, BsPencilFill, BsXLg } from 'react-icons/bs'
 
@@ -29,6 +29,13 @@ const Profile = () => {
 
     const newPhotoForm = useRef()
     const editPhotoForm = useRef()
+
+    // message
+    const componentMessage = () => {
+        setTimeout(() => {
+            dispatch(resetMessage())
+        }, 2000);
+    }
 
     // load user data
     useEffect(() => {
@@ -57,9 +64,13 @@ const Profile = () => {
         formData.append("photo", photoFormData)
         dispatch(publishPhoto(formData))
         setTitle("")
-        setTimeout(() => {
-            dispatch(resetMessage())
-        }, 2000);
+        componentMessage()
+    }
+
+    // delete photo
+    const handleDelete = (id) => {
+        dispatch(deletePhoto(id))
+        componentMessage()
     }
 
     return (
@@ -101,7 +112,7 @@ const Profile = () => {
                 <h2>Fotos publicadas</h2>
                 <div className='photosContainer'>
                     {photos && photos.map((photo) => (
-                        <div className='photo' key={photo.id}>
+                        <div className='photo' key={photo._id}>
                             {photo.image && (<img src={`${upload}/photos/${photo.image}`}
                                 alt={photo.title} />)}
                             {id === userAuth._id ?
@@ -110,7 +121,7 @@ const Profile = () => {
                                         <BsFillEyeFill />
                                     </Link>
                                     <BsPencilFill />
-                                    <BsXLg />
+                                    <BsXLg onClick={() => handleDelete(photo._id)} />
                                 </div>) :
                                 (<Link className="btn" to={`/photos/${photo._id}`}>Ver</Link>)}
                         </div>
