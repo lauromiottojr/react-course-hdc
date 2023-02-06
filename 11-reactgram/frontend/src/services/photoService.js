@@ -58,6 +58,7 @@ export const photoService = {
     publishPhoto,
     getUserPhotos,
     deletePhoto,
+    updatePhoto,
 }
 
 export default photoService
