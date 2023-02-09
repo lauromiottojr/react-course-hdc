@@ -29,7 +29,6 @@ const Photo = () => {
 
     return (
         <div id='photo'>
-           aaa: {photo.userId}
             <PhotoItem photo={photo} />
         </div>
     )
