@@ -4,13 +4,14 @@ import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { getPhoto } from '../../slices/photoSlice'
+import { getPhoto, like } from '../../slices/photoSlice'
 
 import Message from '../../components/Message/Message'
 
 import PhotoItem from '../../components/PhotoItem/PhotoItem'
 
 import './Photo.css'
+import Like from '../../components/Like/Like'
 
 const Photo = () => {
     const { id } = useParams()
@@ -23,6 +24,10 @@ const Photo = () => {
         dispatch(getPhoto(id))
     }, [dispatch, id])
 
+    const handleLike = () => {
+        dispatch(like(photo._id))
+    }
+
     if (loading) {
         return <p>Carregando...</p>
     }
@@ -30,6 +35,7 @@ const Photo = () => {
     return (
         <div id='photo'>
             <PhotoItem photo={photo} />
+            <Like photo={photo} user={user} handleLike={handleLike} />
         </div>
     )
 }
