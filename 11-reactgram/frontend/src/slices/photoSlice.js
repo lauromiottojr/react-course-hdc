@@ -89,6 +89,18 @@ export const comment = createAsyncThunk("photo/comment", async (commentData, thu
 }
 )
 
+// get all photos
+export const getPhotos = createAsyncThunk("photo/comment", async (commentData, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token
+    const data = await photoService.comment({ comment: commentData.comment }, commentData.id, token)
+    // check errors
+    if (data.errors) {
+        return thunkAPI.rejectWithValue(data.errors[0])
+    }
+    return data
+}
+)
+
 export const photoSlice = createSlice({
     name: "photo",
     initialState,
