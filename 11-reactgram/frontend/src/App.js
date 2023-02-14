@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import EditProfile from './pages/EditProfile/EditProfile'
 import Profile from './pages/Profile/Profile'
+import Search from './pages/Search/Search'
 import Photo from './pages/Photo/Photo'
 
 import './App.css'
@@ -32,6 +33,7 @@ function App() {
             <Route path='/users/:id' element={auth ? <Profile /> : <Navigate to='/login' />} />
             <Route path='/login' element={!auth ? <Login /> : <Navigate to='/' />} />
             <Route path='/register' element={!auth ? <Register /> : <Navigate to='/' />} />
+            <Route path='/search' element={auth ? <Search /> : <Navigate to='/login' />} />
             <Route path='/photos/:id' element={auth ? <Photo /> : <Navigate to='/login' />} />
           </Routes>
         </div>
