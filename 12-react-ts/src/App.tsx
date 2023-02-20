@@ -3,6 +3,8 @@ import FirstComponent from "./components/FirstComponent"
 import SecondComponent from "./components/SecondComponent"
 import State from "./components/State"
 
+type textOrNull = string | null
+
 function App() {
 
   const name: String = "Lauro"
@@ -12,6 +14,9 @@ function App() {
   const userGreeting = (name: String): String => {
     return `Olá, ${name}!`
   }
+
+  const myText: textOrNull = "Tem texto aqui!"
+  let myOtherText: textOrNull = null
 
   return (
     <div className="App">
