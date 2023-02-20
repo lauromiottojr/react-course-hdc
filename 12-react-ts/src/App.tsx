@@ -1,6 +1,7 @@
 import Destructuring from "./components/Destructuring"
 import FirstComponent from "./components/FirstComponent"
 import SecondComponent from "./components/SecondComponent"
+import State from "./components/State"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <SecondComponent name={name} />
       <Destructuring title="Meu post" commentQtd={50} content="Algum conteúdo!"
         tags={["vapo", "cepo de madeira"]} />
+      <State />
     </div>
   );
 }
