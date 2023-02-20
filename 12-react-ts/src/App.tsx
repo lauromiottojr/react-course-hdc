@@ -1,24 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 function App() {
+
+  const name: String = "Lauro"
+  const age: number = 30
+  const isWorking: Boolean = true
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>TypeScript + React</h1>
+      <p>Nome: {name}</p>
+      <p>Idade: {age}</p>
+      <p>{name}{isWorking ? (<span> está</span>) : (<span> não está</span>)} trabalhando!</p>
     </div>
   );
 }
