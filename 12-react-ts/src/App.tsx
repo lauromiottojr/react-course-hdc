@@ -1,3 +1,5 @@
+import FirstComponent from "./components/FirstComponent"
+
 function App() {
 
   const name: String = "Lauro"
@@ -15,6 +17,7 @@ function App() {
       <p>Idade: {age}</p>
       <p>{name}{isWorking ? (<span> está</span>) : (<span> não está</span>)} trabalhando!</p>
       <h3>{userGreeting(name)}</h3>
+      <FirstComponent />
     </div>
   );
 }
