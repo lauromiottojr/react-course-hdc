@@ -1,4 +1,6 @@
+import Destructuring from "./components/Destructuring"
 import FirstComponent from "./components/FirstComponent"
+import SecondComponent from "./components/SecondComponent"
 
 function App() {
 
@@ -18,6 +20,9 @@ function App() {
       <p>{name}{isWorking ? (<span> está</span>) : (<span> não está</span>)} trabalhando!</p>
       <h3>{userGreeting(name)}</h3>
       <FirstComponent />
+      <SecondComponent name={name} />
+      <Destructuring title="Meu post" commentQtd={50} content="Algum conteúdo!"
+        tags={["vapo", "cepo de madeira"]} />
     </div>
   );
 }
